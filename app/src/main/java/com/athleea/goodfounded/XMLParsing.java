@@ -66,7 +66,7 @@ public class XMLParsing {
         this.context = context;
     }
 
-    void parsing(String place, String goo) {
+    void parsing() {
 
         db = Room.databaseBuilder(context, AppDatabase.class, "Restaurant").build();
 
