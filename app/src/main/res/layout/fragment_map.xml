@@ -1,17 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:textSize="50dp"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        android:text="This is Map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.gms.maps.MapView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            tools:context=".MapsActivity" />
+
+            <Button
+                android:layout_margin="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/filterBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="필터" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TableLayout
+        android:padding="10dp"
+        android:id="@+id/slidePage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="bottom"
+        android:background="#BDBDBD"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TableRow android:paddingBottom="5dp">
+            <Button
+                android:id="@+id/pageCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00BCD4"
+                android:text="취소"
+                android:textColor="#FFFFFF" />
+            <Button
+                android:layout_column="3"
+                android:id="@+id/applyBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00BCD4"
+                android:layout_weight="1"
+                android:text="적용"
+                android:textColor="#FFFFFF" />
+        </TableRow>
+        <TableRow android:paddingBottom="5dp">
+            <CheckBox
+                android:id="@+id/chk1"
+                android:text="김밥\n(도시락)"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:id="@+id/chk2"
+                android:text="냉면"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk3"
+                android:text="분식"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+        <TableRow android:paddingBottom="5dp">
+            <CheckBox
+                android:id="@+id/chk4"
+                android:text="뷔페"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:id="@+id/chk5"
+                android:text="육류"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk6"
+                android:text="아시안음식"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+        <TableRow android:paddingBottom="5dp">
+            <CheckBox
+                android:id="@+id/chk7"
+                android:text="일식"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:id="@+id/chk8"
+                android:text="중식"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk9"
+                android:text="레스토랑"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+        <TableRow android:paddingBottom="5dp">
+            <CheckBox
+                android:id="@+id/chk10"
+                android:text="치킨"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:id="@+id/chk11"
+                android:text="횟집"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk12"
+                android:text="술집"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+        <TableRow android:paddingBottom="5dp">
+            <CheckBox
+                android:id="@+id/chk13"
+                android:text="감성주점"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:id="@+id/chk14"
+                android:text="기타"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk15"
+                android:text="경양식"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+        <TableRow>
+            <CheckBox
+                android:id="@+id/chk16"
+                android:text="경양식"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" />
+            <CheckBox
+                android:id="@+id/chk17"
+                android:text="경양식"
+                android:gravity="center_horizontal"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </TableRow>
+
+
+
+
+
+
+
+
+    </TableLayout>
+
+
+</FrameLayout>

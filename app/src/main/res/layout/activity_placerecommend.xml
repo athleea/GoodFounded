@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/page1"
+        android:layout_margin="30dp"
+        android:orientation="vertical"
+        android:gravity="left"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="창업하게 될 업종을 선택해주세요"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            android:id="@+id/spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:entries="@array/sectors" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_margin="30dp"
+        android:id="@+id/page2"
+        android:orientation="vertical"
+        android:gravity="left"
+        app:layout_constraintTop_toBottomOf="@+id/page1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="관심 상권"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TableRow>
+            <CheckBox
+                android:text="번화가"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="오피스"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="대학가"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow>
+            <CheckBox
+                android:text="아파트/주택"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="동네골목"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="역세권"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_margin="30dp"
+        android:id="@+id/page3"
+        android:orientation="vertical"
+        android:gravity="left"
+        app:layout_constraintTop_toBottomOf="@+id/page2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="주요 고객층"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TableRow>
+            <CheckBox
+                android:text="10대 미만"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="10대"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="20대"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow>
+            <CheckBox
+                android:text="30대"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="40대/50대"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:text="60대이상"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+    </TableLayout>
+
+
+    <Button
+        app:layout_constraintTop_toBottomOf="@+id/page3"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        android:id="@+id/recommend"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="추천 받기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

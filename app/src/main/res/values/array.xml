@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sectors">
+        <item>경양식</item>
+        <item>김밥(도시락)</item>
+        <item>냉면</item>
+        <item>분식</item>
+        <item>뷔페</item>
+        <item>육류</item>
+        <item>아시안음식</item>
+        <item>일식</item>
+        <item>중식</item>
+        <item>레스토랑</item>
+        <item>치킨</item>
+        <item>회집</item>
+        <item>술집</item>
+        <item>감성주점</item>
+        <item>기타</item>
+
+    </string-array>
+</resources>

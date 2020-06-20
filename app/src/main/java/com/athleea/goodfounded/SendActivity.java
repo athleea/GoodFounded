@@ -17,7 +17,8 @@ import javax.mail.SendFailedException;
 public class SendActivity extends AppCompatActivity {
 
     Button sendBtn;
-    EditText subjectEdit, contentsEdit;
+    EditText subjectEdit;
+    EditText contentsEdit;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +30,9 @@ public class SendActivity extends AppCompatActivity {
                 .permitDiskWrites()
                 .permitNetwork().build());
 
-        sendBtn = (Button) findViewById(R.id.send_btn);
-        subjectEdit = (EditText) findViewById(R.id.subject_Edit);
-        contentsEdit = (EditText) findViewById(R.id.content_Edit);
+        sendBtn = findViewById(R.id.send_btn);
+        subjectEdit = findViewById(R.id.subject_Edit);
+        contentsEdit = findViewById(R.id.content_Edit);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,11 +54,9 @@ public class SendActivity extends AppCompatActivity {
         } catch (MessagingException e) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("Error", e.toString());
         }
     }
-
-
 
 
 }

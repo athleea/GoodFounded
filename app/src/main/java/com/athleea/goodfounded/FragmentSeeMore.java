@@ -19,14 +19,8 @@ public class FragmentSeeMore extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_seemore, container, false);
 
-        Button btn_send = (Button)viewGroup.findViewById(R.id.send_btn_seemore);
-        btn_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SendActivity.class));
-            }
-        });
-
+        Button btnSend = (Button)viewGroup.findViewById(R.id.send_btn_seemore);
+        btnSend.setOnClickListener(view -> startActivity(new Intent(getActivity(), SendActivity.class)));
 
         return viewGroup;
     }

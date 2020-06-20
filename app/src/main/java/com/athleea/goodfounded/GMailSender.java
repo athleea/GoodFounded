@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -45,14 +46,16 @@ public class GMailSender extends javax.mail.Authenticator {
 
     private String createEmailCode() {
         String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        String newCode = new String();
+        String newCode = "";
         for (int x = 0; x < 8; x++) {
-            int random = (int) (Math.random() * str.length);
-            newCode += str[random];
+            int random = (new Random().nextInt() * str.length);
+            newCode = newCode + str[random];
         }
         return newCode;
     }
 
+
+    @Override
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(user, password);
     }
@@ -63,7 +66,7 @@ public class GMailSender extends javax.mail.Authenticator {
         message.setSender(new InternetAddress(user));
         message.setSubject(subject);
         message.setDataHandler(handler);
-        if (recipients.indexOf(',') > 0)
+        if (recipients.indexOf(',') >= 1)
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
         else message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
         Transport.send(message);
