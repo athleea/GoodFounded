@@ -46,12 +46,14 @@ public class GMailSender extends javax.mail.Authenticator {
 
     private String createEmailCode() {
         String[] str = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        String newCode = "";
+
+        StringBuilder bld = new StringBuilder();
         for (int x = 0; x < 8; x++) {
             int random = (new Random().nextInt() * str.length);
-            newCode = newCode + str[random];
+            bld.append(str[random]);
         }
-        return newCode;
+
+        return bld.toString();
     }
 
 

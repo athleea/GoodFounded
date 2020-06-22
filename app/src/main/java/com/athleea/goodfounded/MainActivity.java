@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentMap mapFragment = new FragmentMap();
     private FragmentSeeMore moreFragment = new FragmentSeeMore();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +75,9 @@ public class MainActivity extends AppCompatActivity {
             editor.putBoolean("isFirst", true);
             editor.commit();
 
-            Log.e("enter","parsingStart");
+            Log.e("enter", "parsingStart");
             new XMLParsing(this).parsing();
-
-
         }
-
     }
 
 

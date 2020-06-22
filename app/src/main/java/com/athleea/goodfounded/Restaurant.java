@@ -14,18 +14,40 @@ public class Restaurant {
     private String name;
     @ColumnInfo(name = "주소")
     private String address;
-    @ColumnInfo(name = "업태명")
+    @ColumnInfo(name = "업태")
     private String type;
-    @ColumnInfo(name = "폐업여부")
-    private String closure;
+    @ColumnInfo(name = "경도")
+    private double latitude;
+    @ColumnInfo(name = "위도")
+    private double longitude;
 
-
-    public Restaurant(String place, String name, String address, String type, String closure) {
+    public Restaurant(String place, String name, String address, String type, double latitude, double longitude) {
         this.place = place;
         this.name = name;
         this.address = address;
         this.type = type;
-        this.closure = closure;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public int getId() {
@@ -60,18 +82,6 @@ public class Restaurant {
         this.type = type;
     }
 
-    public String getClosure() {
-        return closure;
-    }
-
-    public void setClosure(String closure) {
-        this.closure = closure;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
     public void setPlace(String place) {
         this.place = place;
     }
@@ -84,7 +94,9 @@ public class Restaurant {
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", type='" + type + '\'' +
-                ", closure='" + closure + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }
+

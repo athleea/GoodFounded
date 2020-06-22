@@ -25,6 +25,17 @@
                 android:layout_height="wrap_content"
                 android:text="필터" />
 
+        <Button
+            android:visibility="gone"
+            android:text="이 지역 검색하기"
+            android:id="@+id/searchBtn"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

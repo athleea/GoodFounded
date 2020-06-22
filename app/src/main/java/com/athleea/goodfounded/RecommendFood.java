@@ -7,81 +7,63 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RecommendFood extends AppCompatActivity {
 
-    private WebView daum_webView;
-    private TextView daum_result;
+    WebView webView;
+    private TextView txt_address;
     private Handler handler;
-    Button addBtn;
-    LinearLayout addlayout;
+    Button address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodrecommend);
 
-        daum_result = (TextView) findViewById(R.id.daum_result);
-        addBtn = (Button) findViewById(R.id.addBtn);
+        txt_address = findViewById(R.id.txt_address);
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addlayout.setVisibility(View.VISIBLE);
-
-                // WebView 초기화
-                init_webView();
-
-                // 핸들러를 통한 JavaScript 이벤트 반응
-                handler = new Handler();
-            }
+        address = findViewById(R.id.addressBtn);
+        address.setOnClickListener(view -> {
+            init_webView();
+            handler = new Handler();
         });
-
-
-
-
-
-
-
-
     }
-    public void init_webView() {
 
+    public void init_webView() {
         // WebView 설정
-        daum_webView = (WebView) findViewById(R.id.daum_webview);
+        webView = findViewById(R.id.webView_address);
 
         // JavaScript 허용
-        daum_webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(true);
 
         // JavaScript의 window.open 허용
-        daum_webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
-        daum_webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
+        webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
 
         // web client 를 chrome 으로 설정
-        daum_webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient());
 
         // webview url load. php 파일 주소
-        daum_webView.loadUrl("file:///android_asset/www/test.html");
+        webView.loadUrl("file:///android_asset/www/test.html");
 
     }
+
+
     private class AndroidBridge {
-
         @JavascriptInterface
-
         public void setAddress(final String arg1, final String arg2, final String arg3) {
-
             handler.post(() -> {
-                daum_result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
+                txt_address.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
                 // WebView를 초기화 하지않으면 재사용할 수 없음
                 init_webView();
             });
-
         }
     }
+
+
 }

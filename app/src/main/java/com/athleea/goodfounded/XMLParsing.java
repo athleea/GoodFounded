@@ -1,6 +1,8 @@
 package com.athleea.goodfounded;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,16 +14,21 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 public class XMLParsing {
 
+    public static AppDatabase db;
     private Context context;
-    AppDatabase db;
+
+    Geocoder geocoder;
 
     String name;
     String type;
     String address;
     String closure;
+    double latitude;
+    double longitude;
 
     String KEY = "614c7472726174683130336579416b48";
 
@@ -62,13 +69,16 @@ public class XMLParsing {
             "http://openAPI.dongjak.go.kr:8088/" + KEY + "/xml/DjFoodHygieneBizRestaurant/"};        //동작구
 
 
+
+
     public XMLParsing(Context context) {
         this.context = context;
     }
 
-    void parsing(String place, String goo) {
+    void parsing() {
 
-        db = Room.databaseBuilder(context, AppDatabase.class, "Restaurant").build();
+        db = AppDatabase.getInstance(context);
+        geocoder = new Geocoder(context);
 
         try {
 
@@ -76,25 +86,22 @@ public class XMLParsing {
                 int total = 1;
 
                 for (int j = 1; j < total + 1; j += 1000) {
-                    Log.e("enter", "url");
+
                     URL url = new URL(urlList[i] + j + "/" + (j + 999));
-                    Log.e("enter", url.toString());
+                    Log.e("XML", url.toString());
                     XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
                     XmlPullParser parser = parserCreator.newPullParser();
-                    Log.e("enter", "parser");
 
                     parser.setInput(url.openStream(), null);
-                    Log.e("enter", "url connect");
 
                     int parserEvent = parser.getEventType();
-
 
                     while (parserEvent != XmlPullParser.END_DOCUMENT) {
                         if (parserEvent == XmlPullParser.START_TAG) {
                             if (parser.getName().equals("UPSO_NM")) {
                                 parser.next();
                                 name = parser.getText();
-                                Log.e("enter", "upso");
+
                             } else if (parser.getName().equals("SITE_ADDR_RD")) {
                                 parser.next();
                                 address = parser.getText();
@@ -108,17 +115,31 @@ public class XMLParsing {
                                 parser.next();
                                 total = Integer.parseInt(parser.getText());
                             }
-                        } else if (parserEvent == XmlPullParser.END_TAG && parser.getName().equals("row")) {
-                            new InsertAsyncTask(db.restaurantDao()).execute(new Restaurant(placeName[i], name, type, address, closure)); //값 DB 저장
-                            Log.e("enter", "DB Save");
+                        } else if (parserEvent == XmlPullParser.END_TAG && parser.getName().equals("row") && closure == null) {
+
+                            List<Address> list = geocoder.getFromLocationName(address, 1);
+                            if (list != null) {
+                                if (list.size() == 0) {
+                                    Log.e("XML", "주소 없음");
+                                } else {
+                                    latitude = list.get(0).getLatitude();
+                                    longitude = list.get(0).getLongitude();
+                                    new InsertAsyncTask(db.restaurantDao()).execute(new Restaurant(placeName[i], name, address, type, latitude, longitude)); //값 DB 저장
+                                    Log.e("XML", "DB save");
+                                }
+                            }
                         }
                         parserEvent = parser.next();
                     }
                 }
             }
         } catch (IOException | XmlPullParserException e) {
-            Log.e("enter", e.toString());
+            Log.e("XML", e.toString());
         }
+    }
+
+    public List<Restaurant> search(String type, double left, double right, double top, double bottom) {
+        return db.restaurantDao().search(type, left, right, top, bottom);
     }
 
     private static class InsertAsyncTask extends AsyncTask<Restaurant, Void, Void> {
@@ -128,7 +149,6 @@ public class XMLParsing {
         public InsertAsyncTask(RestaurantDao todoDao) {
             this.mRestaurantDao = todoDao;
         }
-
 
         @Override
         protected Void doInBackground(Restaurant... restaurants) {
