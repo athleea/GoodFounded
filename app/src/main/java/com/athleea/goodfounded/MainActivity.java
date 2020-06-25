@@ -1,10 +1,9 @@
 package com.athleea.goodfounded;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
+
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -16,11 +15,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
-
     private FragmentHome homeFragment = new FragmentHome();
     private FragmentChart chartFragment = new FragmentChart();
     private FragmentMap mapFragment = new FragmentMap();
     private FragmentSeeMore moreFragment = new FragmentSeeMore();
+
+    static final String TAG = "database";
+    static SQLiteDatabase database;
+    DatabaseHelper helper;
 
 
 
@@ -28,11 +30,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .permitDiskReads()
+                .permitDiskWrites()
+                .permitNetwork().build());
+
         StrictMode.enableDefaults();
+        patchEOFException();
+
+
+        helper = new DatabaseHelper(this);
+        database = helper.getWritableDatabase();
 
 
 
-        checkAppFirstExecute();
+
+
 
         //하단네비게이션탭
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
@@ -67,18 +81,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void checkAppFirstExecute() {
-        SharedPreferences pref = getSharedPreferences("IsFirst", Activity.MODE_PRIVATE);
-        boolean isFirst = pref.getBoolean("isFirst", false);
-        if (!isFirst) {
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("isFirst", true);
-            editor.commit();
 
-            Log.e("enter", "parsingStart");
-            new XMLParsing(this).parsing();
-        }
+
+    private void patchEOFException() {
+        System.setProperty("http.keepAlive", "false");
     }
+
 
 
 }

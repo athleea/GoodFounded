@@ -2,36 +2,37 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:icon="@drawable/ic_home_black_24dp"
+        android:tooltipText=""
+        android:icon="@drawable/baseline_home_black_18dp"
         android:id="@+id/nav_menu1"
         app:showAsAction="always"
         android:enabled="true"
         android:checked="true"
-        android:title="Home"/>
+        android:title="홈"/>
 
     <item
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/baseline_bar_chart_black_18dp"
         android:id="@+id/nav_menu2"
         app:showAsAction="always"
         android:enabled="true"
         android:checked="true"
-        android:title="Push"/>
+        android:title="순위"/>
 
     <item
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/baseline_map_black_18dp"
         android:id="@+id/nav_menu3"
         app:showAsAction="always"
         android:enabled="true"
         android:checked="true"
-        android:title="Map"/>
+        android:title="지도"/>
 
     <item
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/baseline_more_horiz_black_18dp"
         android:id="@+id/nav_menu4"
         app:showAsAction="always"
         android:enabled="true"
         android:checked="true"
-        android:title="seemore"/>
+        android:title="더 보기"/>
 
 
 

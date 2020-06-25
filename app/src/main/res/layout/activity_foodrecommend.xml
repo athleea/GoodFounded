@@ -6,8 +6,11 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:id="@+id/mainText"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:text="창업하게 될 지역을 선택해 주세요"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,20 +18,17 @@
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"/>
 
-    <WebView
-        app:layout_constraintTop_toBottomOf="@+id/mainText"
-        android:id="@+id/webView_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/page1"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintTop_toTopOf="@+id/mainText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
+            android:textColor="#000000"
+            android:gravity="center"
             android:layout_weight="2"
             android:id="@+id/txt_address"
             android:layout_width="wrap_content"
@@ -42,18 +42,21 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
-        android:gravity="center"
         android:textSize="20dp"
-        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
         android:id="@+id/subText"
         app:layout_constraintTop_toBottomOf="@+id/page1"
         android:text="평소에 관심있던 업종을 선택해주세요"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <TableLayout
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@+id/subText"
         android:padding="10dp"
-        android:id="@+id/slidePage"
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -161,46 +164,31 @@
                 android:gravity="center_horizontal" />
             <CheckBox
                 android:id="@+id/chk14"
-                android:text="기타"
+                android:text="경양식"
                 android:gravity="center_horizontal"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <CheckBox
                 android:id="@+id/chk15"
-                android:text="경양식"
+                android:text="기타"
                 android:gravity="center_horizontal"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-        </TableRow>
-        <TableRow>
-            <CheckBox
-                android:id="@+id/chk16"
-                android:text="경양식"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal" />
-            <CheckBox
-                android:id="@+id/chk17"
-                android:text="경양식"
-                android:gravity="center_horizontal"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
         </TableRow>
 
     </TableLayout>
 
-
-
-
-
-
-
-
+    <Button
+        android:id="@+id/recommendAddress"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        android:text="추천 받기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 

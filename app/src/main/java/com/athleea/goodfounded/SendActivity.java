@@ -38,6 +38,8 @@ public class SendActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendSecurityCode(getApplicationContext(), "athleea97@gmail.com");
+                subjectEdit.setText("");
+                contentsEdit.setText("");
             }
         });
 

@@ -9,7 +9,7 @@
 
 
     <application
-
+        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"
         android:allowBackup="false"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -23,6 +23,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDKGsbGvO3uJGvW9Mxw1bo3d0uhwQ4L324" />
 
+        <activity android:name=".WebViewActivity"/>
         <activity android:name=".RecommendFood"/>
         <activity android:name=".RecommendPlace"/>
         <activity android:name=".SendActivity" />

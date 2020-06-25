@@ -4,7 +4,7 @@ package com.athleea.goodfounded;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,21 +26,18 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
     ViewGroup viewGroup;
     Button filterBtn;
     Context context;
-    CheckBox[] foodList = new CheckBox[17];
+    CheckBox[] foodList = new CheckBox[15];
     ArrayList<String> typeList;
 
     GoogleMap map;
@@ -85,14 +82,12 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             addMarkerWithFiltering();
         });
 
-        searchBtn.setOnClickListener(view -> {
-            addMarkerWithFiltering();
-        });
+        searchBtn.setOnClickListener(view -> addMarkerWithFiltering());
 
         return viewGroup;
     }
 
-    void initView(){
+    void initView() {
         slidePage = viewGroup.findViewById(R.id.slidePage);
 
         filterBtn = viewGroup.findViewById(R.id.filterBtn);
@@ -100,12 +95,14 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
         pageCancel = viewGroup.findViewById(R.id.pageCancel);
         searchBtn = viewGroup.findViewById(R.id.searchBtn);
 
+
         context = getContext();
 
+        //체크박스 연결
         for (int i = 0; i < foodList.length; i++) {
-            String n = "list" + i;
-            int resID = getResources().getIdentifier(n, "id", getActivity().getPackageName());
-
+            String n = "chk" + i;
+            int resID = context.getResources().getIdentifier(n, "id", context.getPackageName());
+            Log.e("DB", String.valueOf(resID));
             foodList[i] = viewGroup.findViewById(resID);
         }
 
@@ -121,6 +118,7 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     }
 
+    //구글 api
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -130,34 +128,41 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
             return;
         }
         map = googleMap;
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.56, 126.97)));
-        map.animateCamera(CameraUpdateFactory.zoomTo(15));
-        map.setMyLocationEnabled(true);
-        map.setOnMyLocationButtonClickListener(this);
+        map.setOnMapLoadedCallback(() -> {
+            map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(37.56, 126.97)));
+            map.animateCamera(CameraUpdateFactory.zoomTo(9));
+            map.setMyLocationEnabled(true);
+            map.setOnMyLocationButtonClickListener(this);
+        });
 
-        // 카메라 시점 이동
-        googleMap.setOnCameraMoveListener(() -> {
+
+        map.setOnCameraIdleListener(() -> {
             searchBtn.setVisibility(View.VISIBLE);
-            VisibleRegion vr = googleMap.getProjection().getVisibleRegion();
+            VisibleRegion vr = map.getProjection().getVisibleRegion();
             left = vr.latLngBounds.southwest.longitude;
             top = vr.latLngBounds.northeast.latitude;
             right = vr.latLngBounds.northeast.longitude;
             bottom = vr.latLngBounds.southwest.latitude;
-
+            Log.e("DB", String.valueOf(left) + String.valueOf(right) + String.valueOf(top) + String.valueOf(bottom));
         });
+
     }
 
-
+    //필터메뉴에서 체크된 업태 확인
     public ArrayList<String> checkTypeList() {
-        boolean[] checkList = new boolean[]{false};
+        Log.e("DB", "checkTypeList 호출");
+
+        boolean[] checkList = new boolean[15];
+        ArrayList<String> checkTypeList = new ArrayList<>();
         String[] type = getResources().getStringArray(R.array.sectors);
 
         for (int i = 0; i < foodList.length; i++) {
-            if (foodList[i].isChecked()) {
+            if (foodList[i] != null && foodList[i].isChecked()) {
                 checkList[i] = true;
+                Log.e("DB", "checklist : true");
             }
         }
-        ArrayList<String> checkTypeList = new ArrayList<>();
+
         for (int i = 0; i < checkList.length; i++) {
             if (checkList[i]) {
                 checkTypeList.add(type[i]);
@@ -168,40 +173,30 @@ public class FragmentMap extends Fragment implements OnMapReadyCallback, GoogleM
 
     }
 
-    public void onAddMarker(List<Restaurant> list) {
-        for (int i = 0; i < list.size(); i++) {
-            LatLng position = new LatLng(list.get(i).getLatitude(), list.get(i).getLongitude());
-            MarkerOptions myMarker = new MarkerOptions().position(position);
-            this.map.addMarker(myMarker);
-        }
-
-
-//        // 반경 1KM원
-//        CircleOptions circle1KM = new CircleOptions().center(position) //원점
-//                .radius(1000)      //반지름 단위 : m
-//                .strokeWidth(0f)  //선너비 0f : 선없음
-//                .fillColor(Color.parseColor("#880000ff")); //배경색
-
-        //마커추가
-
-//        //원추가
-//        this.googleMap.addCircle(circle1KM);
+    //DB에서 경도,위도를 가져와 마커만들기
+    public void onAddMarker(double latitude, double longitude) {
+        LatLng position = new LatLng(latitude, longitude);
+        Log.e("DB", String.valueOf(latitude));
+        MarkerOptions myMarker = new MarkerOptions().position(position);
+        this.map.addMarker(myMarker);
     }
 
+    //DB에서 가져온 데이터를 이용하여 지도에 마커 표시
     public void addMarkerWithFiltering() {
+        map.clear();
+        Log.e("DB", "마커표시 호출");
         typeList = checkTypeList();
         for (int i = 0; i < typeList.size(); i++) {
-            try {
-                List<Restaurant> list = XMLParsing.db.restaurantDao().search(typeList.get(i), left, right, top, bottom);
-                if (!list.isEmpty()) {
-                    Log.e("XML", "주소 없음");
-                } else {
-                    onAddMarker(list);
-                    Log.e("XML", "AddMarker");
-                }
-            } catch (NullPointerException e) {
-                Log.e("XML", e.toString());
+            Log.e("DB", String.valueOf(left));
+            Cursor cursor = MainActivity.database.rawQuery(QueryManager.SELECT_RESTAURANT_SEARCH(typeList.get(i), left, right, top, bottom), null);
+            Log.e("DB", "Select 호출");
+            int readCount = cursor.getCount();
+
+            for (int j = 0; j < readCount; j++) {
+                cursor.moveToNext();
+                onAddMarker(cursor.getDouble(3), cursor.getDouble(4));
             }
+
         }
     }
 
